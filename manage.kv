@@ -1,0 +1,109 @@
+<main_face>:
+    name: "main_face"
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout
+            orientation: "vertical"
+            Button:
+                size_hint : (1, 1)
+                text: 'Choose a sample image for search'
+                on_press: root.manager.current = 'image_screen'
+                on_release: self.background_color = (0, 1, 1, 1)
+            Button:
+                size_hint : (1, 1)
+                text: 'Choose the gallery of your images'
+                on_press: root.manager.current = 'path_screen'
+                on_release: self.background_color = (0, 1, 1, 1)
+            Button:
+                size_hint : (1, 1)
+                id: process_id
+                text: 'Process'
+                on_press: root.find_matches(selectedFile, process_id)
+                on_release: self.background_color = (0, 1, 1, 1)
+            Label:
+                font_size: 20
+                pose : (100, 100)
+                size_hint : (1, 1)
+                #text_size: self.width, None
+                id: selectedFile
+                text: "Processing takes some time, get a cup of tea and wait to see Done!   ;)"
+                color: [84, 76, 1, 1]
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint : (1, 0.2)
+            Button:
+                size_hint : (0.5, 1)
+                text: 'Quit'
+                #id:btnExit
+                on_press: app.stop()
+            Button:
+                size_hint: (0.5, 1)
+                text: 'help'
+                on_press: root.manager.current = 'help_screen'
+
+
+<help_screen>:
+    id: help_screen
+    name: "help_screen"
+    Label:
+        font_size: 20
+        text_size: self.width, None
+        id: selectedFile
+    Button:
+        font_size: 85
+        background_color: [0, 1, 1, 1]
+        color: [0, 1, 1, 1]
+        text: ' Azam \n Kamranian \n 09137855154'
+        on_press: root.manager.current = 'main_face'
+
+
+<image_screen>:
+    id: file_chooser
+    name: "image_screen"
+    BoxLayout:
+        id: file_chooser_box_layout
+        orientation: "vertical"
+        Image:
+            id: img
+        FileChooserListView:
+            id: file_chooser_list_view
+            path: "."
+            dirselect: False
+            on_selection:
+        Label:
+            font_size: 20
+            text_size: self.width, None
+            id: selectedFile
+            text: "Please choose an image (png/jpg)."
+        Button:
+            id: img_choose_id
+            text: 'choose image'
+            on_press: root.callback_image_and_other_stuff(file_chooser_list_view.selection, img, selectedFile, img_choose_id)
+            on_release: #img_choose_id.background_color = (0, 1, 1, 1)
+        Button:
+            text: 'Back to menu'
+            on_press: root.manager.current = 'main_face'
+
+<path_screen>:
+    id: path_chooser
+    name: "path_screen"
+    BoxLayout:
+        id: path_chooser_box_layout
+        orientation: "vertical"
+        FileChooserListView:
+            id: path_chooser_list_view
+            path: "."
+            dirselect: False
+            on_selection:
+        Label:
+            font_size: 20
+            text_size: self.width, None
+            text: "Please choose a directory which contains your pictures."
+        Button:
+            id: path_choose_id
+            text: 'choose path'
+            on_press: root.callback_path_and_other_stuff(path_chooser_list_view.path, path_choose_id)
+            on_release: #path_choose_id.background_color = (0, 1, 1, 1)
+        Button:
+            text: 'Back to menu'
+            on_press: root.manager.current = 'main_face'
