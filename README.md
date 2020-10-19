@@ -1,2 +1,2 @@
-# kivy_Album
-Mobile App based on kivy language
+# Phone App: based on kivy
+This is a phone app based on kivy language which separate photos of a specific person from gallery.
